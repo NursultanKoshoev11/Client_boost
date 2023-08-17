@@ -1,0 +1,2 @@
+﻿  first.cpp
+C:\Users\User\source\repos\test\test\first.cpp(2,10): fatal  error C1083: Не удается открыть файл включение: curl/curl.h: No such file or directory,
