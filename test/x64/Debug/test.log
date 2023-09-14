@@ -1,3 +1,7 @@
-﻿  client.cpp
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: промежуточный каталог (x64\Debug\) содержит файлы, которые используются совместно с другим проектом (test.vcxproj).  Это может привести к ошибкам очистки и перестроения.
+  client.cpp
+  first.cpp
+  gpt.cpp
+  Создание кода...
 LINK : warning LNK4044: нераспознанный параметр "/lcurl"; игнорируется
-  test.vcxproj -> C:\Users\User\source\repos\test\x64\Debug\test.exe
+  test.vcxproj -> D:\Server_boost\Server_boost\x64\Debug\Client_boost.exe

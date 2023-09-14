@@ -28,24 +28,7 @@ public:
 	~Client() {}
 
 
-	bool ConnectToServer(const std::string &ipaddress,const uint32_t& port) {
-		serverip = boost::asio::ip::tcp::endpoint(boost::asio::ip::make_address(ipaddress, error), port);
-		if (error) {
-			print("Invalid Ip or Port!!!");
-			return false;
-		}
-
-		socket.connect(serverip, error);
-
-		if (error) {
-			print("Fail to Connect!!!");
-			return false;
-		}
-
-		print("Connect is succesful!!!");
-
-		return true;
-	}
+	bool ConnectToServer(const std::string& ipaddress, const uint32_t& port);
 
 private:
 	boost::asio::io_context context;
