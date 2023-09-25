@@ -1,7 +1,7 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: промежуточный каталог (x64\Debug\) содержит файлы, которые используются совместно с другим проектом (test.vcxproj).  Это может привести к ошибкам очистки и перестроения.
   client.cpp
-  first.cpp
-  gpt.cpp
-  Создание кода...
+C:\Users\KOSHOEV\Desktop\boost_1_82_0\boost\bind.hpp(41): message : The practice of declaring the Bind placeholders (_1, _2, ...) in the global namespace is deprecated. Please use <boost/bind/bind.hpp> + using namespace boost::placeholders, or define BOOST_BIND_GLOBAL_PLACEHOLDERS to retain the current behavior.
+C:\Users\KOSHOEV\Desktop\Git\Client_boost\test\client.h(16,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
+C:\Users\KOSHOEV\Desktop\Git\Client_boost\test\client.cpp(5,7): warning C4091: : пропускается слева от "Client", когда ни одна переменная не объявлена
 LINK : warning LNK4044: нераспознанный параметр "/lcurl"; игнорируется
-  test.vcxproj -> D:\Server_boost\Server_boost\x64\Debug\Client_boost.exe
+  test.vcxproj -> C:\Users\KOSHOEV\Desktop\Git\Server_boost\Server_boost\x64\Debug\Client_boost.exe

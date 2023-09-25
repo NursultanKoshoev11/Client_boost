@@ -10,29 +10,52 @@
 #include <boost/asio/ts/internet.hpp>
 #include <boost/asio/error.hpp>
 #include <boost/system/error_code.hpp>
+#include <boost/smart_ptr/enable_shared_from_this.hpp>
+#include <boost/bind.hpp>
+#include <boost/is_placeholder.hpp>
+#include <vector>;
+#include <bitset>
 
 
 
 template<typename T>
-void print(const T& message) {
-	std::cout << "[" << message << "]" << std::endl;
+static void printlog(const T& message) {
+	std::cout << "[Client: " << message << "]" << std::endl;
 }
 
 
+void set_size_to_bit_array(std::uint16_t* write_size, const size_t& size) {
+	std::memcpy(write_size, &size, sizeof(size_t));
+}
 
-class Client
+
+size_t get_size_from_bit_array(std::uint16_t* write_size) {
+	size_t return_size;
+	std::memcpy(&return_size, write_size, sizeof(size_t));
+	return return_size;
+}
+
+
+class Client : public boost::enable_shared_from_this<Client>
 {
 public:
-	Client() : socket(context) {}
+	Client() : socket(context) { read_message = std::string(6,'1'); }
 
 	~Client() {}
 
-
 	bool ConnectToServer(const std::string& ipaddress, const uint32_t& port);
+	void send_to_server(const std::string& message);
+	void read();
+	void start_thread() { thread_client = std::thread([this]() { context.run(); }); };
 
 private:
 	boost::asio::io_context context;
 	boost::system::error_code error;
 	boost::asio::ip::tcp::socket socket;
 	boost::asio::ip::tcp::endpoint serverip;
+	std::thread thread_client;
+	std::string write_message;
+	std::uint16_t write_size[sizeof(size_t)];
+	std::uint16_t read_size[sizeof(size_t)];
+	std::string read_message;
 };
