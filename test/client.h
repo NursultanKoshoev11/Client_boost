@@ -35,6 +35,16 @@ size_t get_size_from_bit_array(std::uint16_t* write_size) {
 	return return_size;
 }
 
+size_t get_type_message(std::string& str) {
+	size_t type = *str.begin() - '0';
+	str.erase(str.begin());
+	return type;
+}
+
+enum class type_message : std::size_t {
+	Send = 0, Find = 1, Ping = 2
+};
+
 
 class Client : public boost::enable_shared_from_this<Client>
 {
@@ -44,7 +54,7 @@ public:
 	~Client() {}
 
 	bool ConnectToServer(const std::string& ipaddress, const uint32_t& port);
-	void send_to_server(const std::string& message);
+	void send_to_server(type_message type_m, const std::string& message);
 	void read();
 	void start_thread() { thread_client = std::thread([this]() { context.run(); }); };
 

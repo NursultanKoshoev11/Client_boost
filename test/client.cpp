@@ -1,13 +1,23 @@
 #include "client.h"
 #include <condition_variable>
 #include <mutex>
+#include <fstream>
+#include <boost/lexical_cast.hpp>
 
-Client;
+
+
+void chats(const std::unique_ptr<Client>& ptr_client) {
+	std::ifstream chat_file;
+	chat_file.open("chats.txt", std::ios_base::in | std::ios_base::out);
+	if (chat_file.is_open()) {
+		
+	}
+}
 
 void add_chat(const std::unique_ptr<Client>& ptr_client) {
 	size_t FindID;
 	std::cout << "Input ID: "; std::cin >> FindID;
-	ptr_client->send_to_server(std::to_string(FindID));
+	ptr_client->send_to_server(type_message::Find, std::to_string(FindID));
 }
 
 void menu(const std::unique_ptr<Client> &ptr_client) {
@@ -20,7 +30,8 @@ void menu(const std::unique_ptr<Client> &ptr_client) {
 	switch (menu)
 	{
 	case 1: {
-
+		chats(ptr_client);
+		break;
 	}
 	case 2: {
 		add_chat(ptr_client);
@@ -82,12 +93,28 @@ void Client::read() {
 				boost::asio::async_read(socket, boost::asio::buffer(read_message),
 					[this](const boost::system::error_code& error, size_t bytes_transferred) {
 						if (!error) {
-							printlog(read_message);
+							size_t type = get_type_message(read_message);
+							if (type == size_t(type_message::Find)) {
+								uint16_t find_id = boost::lexical_cast<uint16_t>(read_message);
+								if (find_id == 0) {
+									printlog("No Find");
+								}
+								else {
+									printlog("Yes");
+								}
+							}
+							else if (type == size_t(type_message::Send)) {
+								
+							}
+							else if (type == size_t(type_message::Ping)) {
+								
+							}
 						}
 						else {
 							printlog("Error by read message");
 						}
 					});
+				read();
 			}
 			else {
 				printlog("Error by read size");
@@ -96,8 +123,9 @@ void Client::read() {
 
 }
 
-void Client::send_to_server(const std::string &message) {
-	write_message = message;
+void Client::send_to_server(type_message type_m, const std::string& message) {
+	write_message = std::to_string(size_t(type_m));
+	write_message += message;
 	set_size_to_bit_array(write_size, write_message.size());
 	boost::asio::async_write(socket, boost::asio::buffer(write_size),
 		[this](const boost::system::error_code& error, size_t bytes_transferred) {
